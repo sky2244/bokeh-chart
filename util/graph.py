@@ -2,14 +2,18 @@
 from bokeh.io import show, output_notebook
 from bokeh.plotting import figure
 from bokeh.plotting.figure import Figure
-from bokeh.models import RangeTool
+from bokeh.models import RangeTool, HoverTool
 from typing import List, Union, Dict, Any
 
 Real = Union[int, float]
 
 
-def make_figure(title: str, **kargs: Dict[str, Any]) -> Figure:
-    return figure(title=title, **kargs)
+def make_figure(title: str, hover: HoverTool = None,
+                **kargs: Dict[str, Any]) -> Figure:
+    p = figure(title=title, **kargs)
+    if hover is not None:
+        p.add_tools(hover)
+    return p
 
 
 def circle(p: Figure, x: List[Real], y: List[Real],
@@ -22,7 +26,7 @@ def show_figure(p: Figure) -> None:
     show(p)
 
 
-def set_range_tool(p: Figure, x_range: Any=None) -> Figure:
+def set_range_tool(p: Figure, x_range: Any = None) -> Figure:
     if x_range is None:
         x_range = p.x_range
     range_tool = RangeTool(x_range=x_range)

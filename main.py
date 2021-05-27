@@ -2,7 +2,7 @@
 
 # %%
 from bokeh.layouts import column
-from bokeh.models import Range1d
+from bokeh.models import Range1d, HoverTool
 import numpy as np
 from typing import Tuple, List
 from bokeh.plotting.figure import Figure
@@ -23,11 +23,12 @@ def make_graph() -> Figure:
     TOOLS: str = "pan,wheel_zoom,box_zoom,reset,save,box_select"
     title: str = "Legend Example"
 
+    hover: HoverTool = HoverTool(tooltips=[('x', '@x'), ('y', '@y')])
     p1: Figure = graph.make_figure(
-        title=title, tools=TOOLS, x_range=Range1d(0, 10))
-    graph.circle(p1, x, y, legend='sin(x)')
-    graph.circle(p1, x, 2 * y, legend='2*sin(x)', color='orange')
-    graph.circle(p1, x, 3 * y, legend='3*sin(x)', color='green')
+        title=title, tools=TOOLS, x_range=Range1d(0, 10), hover=hover)
+    graph.circle(p1, x, y, legend_label='sin(x)')
+    graph.circle(p1, x, 2 * y, legend_label='2*sin(x)', color='orange')
+    graph.circle(p1, x, 3 * y, legend_label='3*sin(x)', color='green')
 
     figure = make_range_tool(p1)
 
